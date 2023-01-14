@@ -23,8 +23,8 @@ _start:
 		jmp loop
 
 
-.include "boot_sect_print.s"
-.include "boot_sect_print_hex.s"
+.include "real_mode_print/boot_sect_print.s"
+.include "real_mode_print/boot_sect_print_hex.s"
 .include "boot_sect_disk.s"
 
 .fill 510 - (. - _start), 1, 0
@@ -34,4 +34,4 @@ _start:
 
 .fill 256, 2, 0xdada
 .fill 256, 2, 0xface
-		
+	
