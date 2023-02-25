@@ -4,8 +4,13 @@ _start:
 	mov $0x8000, %bp
 	mov %bp, %sp
 
+	lea MSG, %bx
+	call print
+	call print_nl
+
 	mov $0x9000, %bx       # Loading the kernel at es:bx (can load anywhere below 1MB in real mode)
 	mov $2, %dh            # Number of sectors to read
+
 
 	call disk_load
 
@@ -23,9 +28,11 @@ _start:
 		jmp loop
 
 
-.include "real_mode_print/boot_sect_print.s"
-.include "real_mode_print/boot_sect_print_hex.s"
+.include "../printing/real_mode_print/boot_sect_print.s"
+.include "../printing/real_mode_print/boot_sect_print_hex.s"
 .include "boot_sect_disk.s"
+
+MSG: .string "test"
 
 .fill 510 - (. - _start), 1, 0
 .word 0xaa55
