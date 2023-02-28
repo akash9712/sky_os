@@ -18,6 +18,10 @@ _start:
 .include "../printing/32_bit_print.s"
 .include "./32bit_enter.s"
 
+# Main differences in 32 bit mode:
+#	32-bit registers can now be used.
+#	32-bit memory offsets available: e.g. ffffffff
+#	Much more complex and sophisticated memory segmentation
 .code32
 
 BEGIN_PM:
