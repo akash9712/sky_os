@@ -24,7 +24,7 @@ bootloader:
 .include "./32bit_gdt.s"
 .include "../printing/32_bit_print.s"
 .include "./32bit_enter.s"
-.include "../bootloader/boot_sect_disk.s"
+.include "boot_sect_disk.s"
 
 .code16
 LOAD_KERNEL:
