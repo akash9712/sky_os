@@ -43,9 +43,9 @@ LOAD_KERNEL:
 #	Much more complex and sophisticated memory segmentation
 .code32
 BEGIN_PM:
-	call KERNEL_LOADING_ADDRESS        # Kernel is now at the offset, transfer the control.
 	lea MSG_KERNEL_LOADED, %ebx
 	call print_string_pm
+	call KERNEL_LOADING_ADDRESS        # Kernel is now at the offset, transfer the control.
 	jmp .
 
 BOOT_DRIVE: .word 0

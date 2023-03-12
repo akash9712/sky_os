@@ -2,7 +2,7 @@
 .text
 
 .globl _start
-
+.extern main
 _start:
 	xor %ebp, %ebp
 	mov (%esp), %edi

@@ -27,4 +27,5 @@ run: bootsect/os_image.bin
 	qemu-system-i386  $<
 
 clean:
-	rm ./*/*.bin ./*/*.o ./*/*.dis 
+	rm ./*/*.bin ./*/*.o
+

@@ -7,6 +7,7 @@ gdt_start:
 	# Since the segment register is used as the index in the GDT, not setting it,
 	# i.e. the segment being 0x0 will point to this null entry, whereby the
 	# CPU will raise an interrupt.
+gdt_null:
 	.long 0x0
 	.long 0x0
 
@@ -14,7 +15,7 @@ gdt_code:
 	# GDT for the code segment (refer to the structure of a row in GDT in os-dev.pdf)
 	.word 0xffff                  # Limit (Bits 0-15)
 	.word 0x0                     # Segment base (bits 0-15)
-	.byte 0x0                     # Segment base (bits 0-15)
+	.byte 0x0                     # Segment base (bits 16-23)
 	.byte 0b10011010	      # 1st flags, type flags
 	.byte 0b11001111              # 2nd flags, limit (bits 16-19)
 	.byte 0x0                     # Base (bits 24-31)
