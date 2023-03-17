@@ -1,5 +1,5 @@
 #include <stdbool.h>
-
+#include <stdint.h>
 enum vga_color {
 	black = 0,
 	blue = 1,
@@ -19,7 +19,7 @@ enum vga_color {
 	white = 15
 } typedef vga_color;
 
-unsigned short int text_color_byte(vga_color fg, vga_color bg)
+uint32_t text_color_byte(vga_color fg, vga_color bg)
 {
 	return bg << 4 | fg;
 }
