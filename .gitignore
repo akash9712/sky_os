@@ -1,0 +1,5 @@
+*\.o
+bootsector
+boot_sect_main
+*\.bin
+*\.*\.swp

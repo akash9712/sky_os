@@ -1,39 +1,55 @@
 # First rule is executed when no parameters are fed to the Makefile.
 
-all: run
+ROOT_DIR = $(CURDIR)
+SYSROOT_DIR = $(ROOT_DIR)/sysroot
+UTIL_DIR = $(SYSROOT_DIR)/util
+STDLIB_DIR = $(SYSROOT_DIR)/usr
+KERNEL_DIR = $(ROOT_DIR)/kernel
+BOOTSECT_DIR = $(ROOT_DIR)/bootsect
+
+
+UTIL_INC_SRCH_PATH :=
+UTIL_INC_SRCH_PATH += -I$(UTIL_DIR)
+
 
 # Add locations where GCC will look for header files here. This list is supplied
 # using the -isystem argument, passed to GCC, which tells GCC where to look for
 # headers.
-std_header_dirs = ./sysroot/usr/include ./sysroot/usr/
+STD_HEADER_DIR_INCL := $(STDLIB_DIR)/include 
+STD_HEADER_DIR := $(STDLIB_DIR)
 
-kernel/kernel.bin: kernel/kernel_entry.o kernel/kernel.o
-	i686-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
 
-kernel/kernel_entry.o: kernel/kernel_entry.s
-	as $< -o $@ --32
+CC = i686-elf-gcc
+LD = i686-elf-ld
+CFLAGS = -Wall -nostdlib -isystem $(STD_HEADER_DIR) -isystem $(STD_HEADER_DIR_INCL)
 
-kernel/kernel.o: kernel/kernel.c $(std_header_dirs)
-	i686-elf-gcc -nostdlib -c $< -o $@ -isystem $(std_header_dirs)
+all: 
+	cd $(UTIL_DIR) && make
+	cd $(BOOTSECT_DIR) && make
+	cd $(KERNEL_DIR) && make
+	make run
 
-kernel/kernel.dis: kernel/kernel.bin
-	objdump -D -m i386 -Maddr32,daa32 $<
 
-bootsect/bootsect.bin: bootsect/bootsect.o
-	i686-elf-ld $< -o $@ --oformat=binary --Ttext=0x7c00 -m elf_i386
-
-bootsect/bootsect.o: bootsect/bootsect.s
-	as $< -o $@ --32
+# Export variables defined above to be used by the all the Makefiles in the subdirectories.
+export
 
 # Join 512 bytes from the bootloader and the kernel binary to generate
 # the OS image, treated as an image on the disk, will be fed to Qemu.
-bootsect/os_image.bin: bootsect/bootsect.bin kernel/kernel.bin
+$(ROOT_DIR)/os_image.bin: bootsect/bootsect.bin kernel/kernel.bin
 	cat $^ > $@
 
+# Go into the subdirectories and run `make`.
+
+
 # Run the boot image on Qemu.
-run: bootsect/os_image.bin
+run: $(ROOT_DIR)/os_image.bin
 	qemu-system-i386  $<
 
 clean:
-	rm ./*/*.bin ./*/*.o
+
+	cd $(UTIL_DIR) && make clean
+	cd $(BOOTSECT_DIR) && make clean
+	cd $(KERNEL_DIR) && make clean
+	rm ./*.bin
+
 

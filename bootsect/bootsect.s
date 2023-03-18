@@ -21,10 +21,10 @@ bootloader:
 
 .include "printing/real_mode_print/boot_sect_print.s"
 .include "printing/real_mode_print/boot_sect_print_hex.s"
-.include "bootsect/32bit_gdt.s"
 .include "printing/32_bit_print.s"
-.include "bootsect/32bit_enter.s"
-.include "bootsect/boot_sect_disk.s"
+.include "32bit_gdt.s"
+.include "32bit_enter.s"
+.include "boot_sect_disk.s"
 
 .code16
 LOAD_KERNEL:
