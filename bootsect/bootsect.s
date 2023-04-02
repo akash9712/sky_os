@@ -32,7 +32,7 @@ LOAD_KERNEL:
 	call print
 	call print_nl
 	mov $KERNEL_LOADING_ADDRESS, %bx   # Since disk read is loaded into ES:BX
-        mov $0x01, %dh	 		   # Number of sectors read.
+        mov $0x08, %dh	 		   # Number of sectors read.
 	mov BOOT_DRIVE, %dl
 	call disk_load
 	ret

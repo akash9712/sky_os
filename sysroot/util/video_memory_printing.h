@@ -3,8 +3,11 @@
 #ifndef VIDEO_MEMORY_H
 #define VIDEO_MEMORY_H
 
-extern uint16_t* const VIDEO_MEMORY_BUFFER;
 extern const uint32_t VIDEO_MEMORY_LOCATION;
+extern uint16_t* const VIDEO_MEMORY_BUFFER;
+
+extern uint16_t terminal_row;
+extern uint16_t terminal_col;
 
 enum vga_color {
 	VGA_COLOR_BLACK = 0,
