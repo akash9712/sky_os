@@ -48,12 +48,20 @@ void clear_terminal();
 // Prints a character `c` onto the screen at an offset `offset` from the
 // starting position (top left of the screen), with font and background
 // represented by `font_col` and back_col`.
-void print_char(unsigned char c, uint8_t x, uint8_t y, vga_color font_col, vga_color back_col);
+static void print_char(unsigned char c, uint8_t* x, uint8_t* y, vga_color font_col, vga_color back_col);
 
-// Print a character sequence given the pointer to a character array.
-// Resumes printing from the previous position, since the global row and column for the 
-// terminal are not changed.
-void print_char_sequence(char* sequence, vga_color font_col, vga_color back_col);
+// Print a character sequence at a particular position on the screen, by
+// placing the corresponding character values and the color attributes at the
+// corresponding addresses on the video memory.
+void kprint_at(char* sequence, int x, int y, vga_color font_col, vga_color back_col);
+
+// Print a character sequence given the pointer to a character array at the top
+// left of the screen.
+void kprint(char* sequence, vga_color font_col, vga_color back_col);
+
+// Print a character sequence at where the previous printed string ended on the
+// video_memory.
+void kprint_continue(char* sequence, vga_color font_col, vga_color back_col);
 
 #endif
 

@@ -13,17 +13,18 @@ void write_at_cursor(char c)
 	position += port_byte_in(VGA_INPUT_PORT);
 
 	int offset_from_vga = position * 2;
-	char* vga = (char*) 0xb8000;
-	vga[offset_from_vga] = c;
-	vga[offset_from_vga + 1] = 0x0f;
+	// char* vga = (char*) 0xb8000;
+	// vga[offset_from_vga] = c;
+	// vga[offset_from_vga + 1] = 0x0f;
+
 }
 
 int kernel_main(int argc, char** argv){
 	clear_terminal();
 	char* hello_world_msg = "Hello world!\n";
-        print_char_sequence(hello_world_msg, VGA_COLOR_WHITE,
+        kprint(hello_world_msg, VGA_COLOR_WHITE,
 			     VGA_COLOR_BLACK);
-	print_char_sequence("Testing the new line now.",
+	kprint_continue("Testing the new line now.",
 			     VGA_COLOR_RED, VGA_COLOR_WHITE);
 	write_at_cursor('x');
 	return 0;
