@@ -6,7 +6,7 @@ UTIL_DIR = $(SYSROOT_DIR)/util
 STDLIB_DIR = $(SYSROOT_DIR)/usr
 KERNEL_DIR = $(ROOT_DIR)/kernel
 BOOTSECT_DIR = $(ROOT_DIR)/bootsect
-
+DRIVER_DIR = $(SYSROOT_DIR)/drivers
 
 UTIL_INC_SRCH_PATH :=
 UTIL_INC_SRCH_PATH += -I$(UTIL_DIR)
@@ -17,14 +17,16 @@ UTIL_INC_SRCH_PATH += -I$(UTIL_DIR)
 # headers.
 STD_HEADER_DIR_INCL := $(STDLIB_DIR)/include 
 STD_HEADER_DIR := $(STDLIB_DIR)
+STD_ROOT := $(SYSROOT_DIR)
 
 
 CC = i686-elf-gcc
 LD = i686-elf-ld
-CFLAGS = -Wall -nostdlib -isystem $(STD_HEADER_DIR) -isystem $(STD_HEADER_DIR_INCL)
+CFLAGS = -Wall -nostdlib -isystem $(STD_HEADER_DIR) -isystem $(SYSROOT_DIR) -isystem $(STD_HEADER_DIR_INCL)
 
 all: 
 	cd $(UTIL_DIR) && make
+	cd $(DRIVER_DIR) && make
 	cd $(BOOTSECT_DIR) && make
 	cd $(KERNEL_DIR) && make
 	make run
@@ -45,11 +47,16 @@ $(ROOT_DIR)/os_image.bin: bootsect/bootsect.bin kernel/kernel.bin
 run: $(ROOT_DIR)/os_image.bin
 	qemu-system-i386  $<
 
+debug: $(ROOT_DIR)/os_image.bin
+	qemu-system-i386 -s fda os-image.bin
+	i686-elf-gdb -ex "target remote localhost:1234" -ex "symbol-file kernel.elf"
+
 clean:
 
-	cd $(UTIL_DIR) && make clean
-	cd $(BOOTSECT_DIR) && make clean
-	cd $(KERNEL_DIR) && make clean
-	rm ./*.bin
+	-cd $(UTIL_DIR) && make clean
+	-cd $(BOOTSECT_DIR) && make clean
+	-cd $(KERNEL_DIR) && make clean
+	-cd $(DRIVER_DIR) && make clean
+	-rm ./*.bin
 
 

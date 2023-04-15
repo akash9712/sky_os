@@ -9,7 +9,7 @@ _start:
 	lea 4(%esp), %esi
 	lea 8(%esp, %edi, 4), %edx
 	xor %eax, %eax
-	call main
+	call kernel_main
 
 	mov %eax, %edi
 	xor %eax, %eax

@@ -1,13 +1,31 @@
-ENTRY(_start)
 OUTPUT_FORMAT("binary")
+ENTRY(_start)
+addr = 0x00001000;
 SECTIONS
 {
-	. = 0x1000;
-	.text : { *(.txt) }
-
-	. = 0x2000;
-	.bss : { *(.bss) }
-
-	. = 0x3000;
-	.data : { *(.data) }
+    .text addr : AT(addr) {
+        code = .;
+        *(.text)
+        *(.rodata)
+        . = ALIGN(4096);
+    }
+    .data : AT(addr + (data - code))
+    {
+        data = .;
+        *(.data)
+        . = ALIGN(4096);
+    }
+    .bss : AT(addr + (bss - code))
+    {
+        bss = .;
+        *(.bss)
+        . = ALIGN(4096);
+    }
+    end = .;
+    /DISCARD/ :
+    {
+        *(.comment)
+        *(.eh_frame)
+    }
 }
+

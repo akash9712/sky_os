@@ -49,7 +49,8 @@ void print_char_sequence(char* sequence, vga_color font_col, vga_color back_col)
 		terminal_col++;
 		if(terminal_col == TERMINAL_WIDTH) {
 			terminal_col = 0;
-			terminal_row = (++terminal_row)%TERMINAL_HEIGHT;
+			terminal_row++;
+			terminal_row %= TERMINAL_HEIGHT;
 		}		
 
 	 }
