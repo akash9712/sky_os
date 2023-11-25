@@ -1,10 +1,10 @@
 #include <stdint.h>
 #include "video_memory_printing.h"
+#include "cursor.h"
+
 const uint32_t VIDEO_MEMORY_LOCATION = 0xb8000;
 uint16_t* const VIDEO_MEMORY_BUFFER = (uint16_t*) VIDEO_MEMORY_LOCATION;
 
-const uint16_t TERMINAL_WIDTH = 80;
-const uint16_t TERMINAL_HEIGHT = 25;
 
 uint16_t terminal_row;
 uint16_t terminal_col;
@@ -18,7 +18,7 @@ uint32_t strlen(char* str) {
 }
 
 
-static void print_char(unsigned char c, uint8_t* x, uint8_t* y,  vga_color font_col, vga_color back_col) {
+void print_char(unsigned char c, uint8_t* x, uint8_t* y,  vga_color font_col, vga_color back_col) {
 	uint8_t x_val = (*x);
 	uint8_t y_val = (*y);
 	if(c == '\n') {
@@ -41,6 +41,7 @@ void clear_terminal() {
 			print_char(' ', (uint8_t*)&x, (uint8_t*)&y, default_fg, default_bg);
 		}
 	}
+	set_cursor_offset(get_offset(0, 0));
 }
 
 
@@ -67,11 +68,11 @@ void kprint_at(char* sequence, int x, int y, vga_color font_col, vga_color back_
 
 }
 
-void kprint(char* sequence, vga_color font_col, vga_color back_col) {
+void kprint_beginning(char* sequence, vga_color font_col, vga_color back_col) {
 	kprint_at(sequence, 0, 0, font_col, back_col);
 }
 
-void kprint_continue(char* sequence, vga_color font_col, vga_color back_col) {
+void kprint(char* sequence, vga_color font_col, vga_color back_col) {
 	kprint_at(sequence, terminal_col, terminal_row, font_col, back_col);
 }
 

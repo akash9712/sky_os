@@ -2,7 +2,7 @@
 
 ROOT_DIR = $(CURDIR)
 SYSROOT_DIR = $(ROOT_DIR)/sysroot
-UTIL_DIR = $(SYSROOT_DIR)/util
+UTIL_DIR = $(SYSROOT_DIR)/screen
 STDLIB_DIR = $(SYSROOT_DIR)/usr
 KERNEL_DIR = $(ROOT_DIR)/kernel
 BOOTSECT_DIR = $(ROOT_DIR)/bootsect

@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include <util/video_memory_printing.h>
+#include <screen/video_memory_printing.h>
 #include <drivers/ports.h>
 
 void write_at_cursor(char c)
@@ -24,7 +24,7 @@ int kernel_main(int argc, char** argv){
 	char* hello_world_msg = "Hello world!\n";
         kprint(hello_world_msg, VGA_COLOR_WHITE,
 			     VGA_COLOR_BLACK);
-	kprint_continue("Testing the new line now.",
+	kprint("Testing the new line now.",
 			     VGA_COLOR_RED, VGA_COLOR_WHITE);
 	write_at_cursor('x');
 	return 0;

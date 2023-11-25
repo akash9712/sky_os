@@ -6,6 +6,8 @@
 extern const uint32_t VIDEO_MEMORY_LOCATION;
 extern uint16_t* const VIDEO_MEMORY_BUFFER;
 
+const uint16_t TERMINAL_WIDTH = 80;
+const uint16_t TERMINAL_HEIGHT = 25;
 extern uint16_t terminal_row;
 extern uint16_t terminal_col;
 
@@ -41,6 +43,11 @@ static int16_t inline vga_entry(unsigned char c, vga_color fg, vga_color bg) {
         return (uint16_t)c | attribute_word(fg, bg) << 8;
 }
 
+static int get_offset(int col, int row) { return 2 * (row * TERMINAL_WIDTH + col); }
+
+static int get_offset_row(int offset) { return offset / (2 * TERMINAL_WIDTH); }
+
+static int get_offset_col(int offset) { return (offset - (get_offset_row(offset)*2*TERMINAL_WIDTH))/2; }
 
 // Clears the terminal, brings the row and column indices to 0;
 void clear_terminal();
@@ -48,7 +55,7 @@ void clear_terminal();
 // Prints a character `c` onto the screen at an offset `offset` from the
 // starting position (top left of the screen), with font and background
 // represented by `font_col` and back_col`.
-static void print_char(unsigned char c, uint8_t* x, uint8_t* y, vga_color font_col, vga_color back_col);
+void print_char(unsigned char c, uint8_t* x, uint8_t* y, vga_color font_col, vga_color back_col);
 
 // Print a character sequence at a particular position on the screen, by
 // placing the corresponding character values and the color attributes at the
@@ -57,11 +64,11 @@ void kprint_at(char* sequence, int x, int y, vga_color font_col, vga_color back_
 
 // Print a character sequence given the pointer to a character array at the top
 // left of the screen.
-void kprint(char* sequence, vga_color font_col, vga_color back_col);
+void kprint_beginning(char* sequence, vga_color font_col, vga_color back_col);
 
 // Print a character sequence at where the previous printed string ended on the
 // video_memory.
-void kprint_continue(char* sequence, vga_color font_col, vga_color back_col);
+void kprint(char* sequence, vga_color font_col, vga_color back_col);
 
 #endif
 
