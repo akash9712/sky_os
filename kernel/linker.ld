@@ -1,6 +1,6 @@
 OUTPUT_FORMAT("binary")
 ENTRY(_start)
-addr = 0x00001000;
+addr = 0x0001000;
 SECTIONS
 {
     .text addr : AT(addr) {

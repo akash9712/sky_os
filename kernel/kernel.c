@@ -13,9 +13,9 @@ void write_at_cursor(char c)
 	position += port_byte_in(VGA_INPUT_PORT);
 
 	int offset_from_vga = position * 2;
-	// char* vga = (char*) 0xb8000;
-	// vga[offset_from_vga] = c;
-	// vga[offset_from_vga + 1] = 0x0f;
+	char* vga = (char*) 0xb8000;
+	vga[offset_from_vga] = c;
+	vga[offset_from_vga + 1] = 0x0f;
 
 }
 

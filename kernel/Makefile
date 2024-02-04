@@ -11,7 +11,7 @@ $(CURDIR)/kernel_entry.o: $(CURDIR)/kernel_entry.s
 	as $< -o $@ --32
 
 $(CURDIR)/kernel.o: $(CURDIR)/kernel.c $(std_header_dirs)
-	$(CC) $(CFLAGS) -c $< -o $@ $(UTIL_INC_SRCH_PATH)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm  ./*.o ./*.bin

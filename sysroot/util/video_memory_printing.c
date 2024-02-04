@@ -17,7 +17,9 @@ uint32_t strlen(char* str) {
 	return len;
 }
 
-
+// Prints a character `c` onto the screen at an offset `offset` from the
+// starting position (top left of the screen), with font and background
+// represented by `font_col` and back_col`.
 static void print_char(unsigned char c, uint8_t* x, uint8_t* y,  vga_color font_col, vga_color back_col) {
 	uint8_t x_val = (*x);
 	uint8_t y_val = (*y);

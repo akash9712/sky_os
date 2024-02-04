@@ -48,7 +48,6 @@ void clear_terminal();
 // Prints a character `c` onto the screen at an offset `offset` from the
 // starting position (top left of the screen), with font and background
 // represented by `font_col` and back_col`.
-static void print_char(unsigned char c, uint8_t* x, uint8_t* y, vga_color font_col, vga_color back_col);
 
 // Print a character sequence at a particular position on the screen, by
 // placing the corresponding character values and the color attributes at the
